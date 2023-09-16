@@ -15,6 +15,8 @@
 > The management of infrastructure for continuous application deployment can be both time-consuming and intricate, with escalating costs as complexity increases. AWS Beanstalk takes on the responsibility of overseeing our application's infrastructure, allowing our team to concentrate on coding and implementing new features. This seamless infrastructure management ensures that our application can scale efficiently and remain consistently available to our users.
 
 
+## Plan Diagram
+![Deployment 3 Diagram drawio](https://github.com/atlas-lion91/Deployment_3/assets/140761974/0cb466f1-c771-4bde-b1bf-ce98caadab32)
 
 ___
 
