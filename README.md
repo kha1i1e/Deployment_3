@@ -132,7 +132,7 @@ _main
 > # Verify the 200 response from the Webhook ping
 > ````
 
-## 11. Push New Code to Trigger an Automatic Jenkins Build
+## 11. Push New Code to Automate changes in Jenkins Build
 > ````
 > # Change directories into the templates folder
 > cd Deployment_3/templates/       
@@ -142,14 +142,14 @@ _main
 > 
 > git add .
 > git commit -m 'Commit a change'
-> git push
+> git push origin HEAD:
 > ````
 
 
 |![URL Shortener Web App confirmation](https://github.com/atlas-lion91/Deployment_3/assets/140761974/0e2e2dfb-eb43-4fa7-9778-22f7564a9bf3) |
  | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/redbg.PNG) |
 
-## On our Jenkins server, we can see that a build, test, and deployment were automatically triggered.
+## On the Jenkins server, we can see that a build, test, and deployment were automatically triggered.
 
 > <p align="center">
 ![Screenshot 2023-09-16 002247](https://github.com/atlas-lion91/Deployment_3/assets/140761974/5904e395-9dcd-4801-9aa6-02e78a5ac8f0)
@@ -158,44 +158,18 @@ _main
 ---
 
 # Issues:
-### _1) Build Failure..._
 
-> ##### During our initial attempt, the first build process failed, and the console output revealed the error displayed below. We identified that the root cause of this failure was the absence of Python and the incorrect version on our Jenkins server. Without the correct Python binaries, Jenkins couldn't execute the Python code within our application, resulting in a pipeline failure.
+### _1) Webhook Payload URL Response:_
+> ##### I configured a webhook in GitHub to notify Jenkins, triggering the build, test, and deployment process whenever code changes were pushed to GitHub. In the image below, you can see that we needed to specify a URL:
 
-> <p align="center">
-> <img src="https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/builderror1.png">
-> </p>
+### Initially, I entered the URL of our application as the payload URL, which resulted in a 403 error response.
 
-> ##### Jenkins relies on the presence of essential Python components to carry out its tasks, much like attempting to bake a cake without the necessary ingredients or tools. To resolve this issue, we executed the following command to provide Jenkins with the required Python components:
+### I learned that the payload URL should be the URL of our Jenkins server, formatted as follows:
 
-> ````
-> sudo apt install python3.10-venv
-> ````
+> #### (http://yourip:8080/github-webhook/)  
 
-### _2) Webhook Payload URL Response..._
-> ##### We configured a webhook in GitHub to notify Jenkins, triggering the build, test, and deployment process whenever code changes were pushed to GitHub. In the image below, you can see that we needed to specify a URL:
+![Screenshot 2023-09-16 001807](https://github.com/atlas-lion91/Deployment_3/assets/140761974/f2547007-e52a-420d-a3e5-562194313309)
 
-> <p align="center">
-> <img src="https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookreqres.png">
-> </p>
-
-### Initially, we entered the URL of our application as the payload URL, which resulted in a 403 error response.
-
-| Incorrect Payload URL                   | 403 Error Code                      |
-| ----------------------------------- | ----------------------------------- |
-| ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookpayloadwrong.png) | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/dp3_webhookfail.PNG) | 
-
-### After conducting some research, we came across two valuable resources that helped us understand how to structure the payload URL correctly:
-
-
-### We learned that the payload URL should be the URL of our Jenkins server, formatted as follows:
-
-> #### Format: " http:// + address + : + port + /github-webhook/"  
-> #### Example: " ht<span>tp://</span>35.153.130.215:8080/github-webhook/ "
-
-| Correct Payload URL                   | 200 Status Code                      |
-| ----------------------------------- | ----------------------------------- |
-| ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookpayloadcorrect.png) | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/dp3_webhooksuccessres.PNG) |
 
 ---
 
