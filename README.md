@@ -1,26 +1,206 @@
-<p align="center">
-<img src="https://github.com/kura-labs-org/kuralabs_deployment_1/blob/main/Kuralogo.png">
-</p>
-<h1 align="center">C4_deployment-3<h1> 
+# **Automating Jenkins Build and AWS Beanstalk Deployment with Webhooks:**
 
-Demonstrate your ability deploy a fully automated Elastic Beanstalk deployment.
+# Purpose:
 
-- Create a separate GitHub repository for this application 
+> ### The goal of this project is to automate the build and deployment stages within a CI/CD pipeline. This automation eliminates manual tasks and minimizes the chances of human errors. To achieve this, we configure a mechanism to regularly check our code repository at specified intervals. Additionally, we utilize Webhooks to inform Jenkins whenever new code is pushed to our GitHub repository. Both of these methods work together seamlessly to automatically build, test, and redeploy our application, significantly reducing deployment time and labor costs.
+> ### Our app's primary objective is to convert lengthy URLs into concise and user-friendly links, thereby promoting easier sharing and enhanced usability. To achieve this, we employ Jenkins to enforce error-free deployments, while AWS Beanstalk efficiently manages and auto-scales our infrastructure, ensuring uninterrupted availability. These tools empower us to address user engagement-related business challenges and streamline our workflow.
 
-- Download the files from this repository and upload them to your newly created repository 
+### URL Shortener:
+> Frequently, URLs can become unwieldy and unfriendly to users. A URL shortening service resolves this issue by transforming lengthy URLs into more compact and manageable forms. Consequently, this enhances user engagement, as shorter URLs are not only more user-friendly but also more likely to be shared. Nevertheless, it's important to note that shortened URLs have historically been associated with security risks from viruses and malicious websites. However, users are increasingly accustomed to encountering shortened URLs, which ultimately leads to greater engagement with our content.
 
-- Be sure to follow the deployment instructions from this repository  
+### Jenkins:
+> Manual processes for building, testing, and deploying applications are susceptible to human error and often consume significant amounts of time. Jenkins, our automation tool of choice, automates these critical phases, mitigating the risk of human error and expediting our continuous integration and deployment capabilities. While there may be a learning curve associated with Jenkins, the investment in learning this tool ultimately reduces the overall cost and time required to build and deploy our application.
 
-- Document your progress in a .md file in your repository. Also, document any issues you may run into and what you did to fix them.
+### AWS Beanstalk:
+> The management of infrastructure for continuous application deployment can be both time-consuming and intricate, with escalating costs as complexity increases. AWS Beanstalk takes on the responsibility of overseeing our application's infrastructure, allowing our team to concentrate on coding and implementing new features. This seamless infrastructure management ensures that our application can scale efficiently and remain consistently available to our users.
 
-- Make sure your documentation includes these sections:
-  - Purpose
-  - Issues
-  - Steps
-  - System Diagram
-  - Optimization (How would make this deployment more efficient)
 
-- Lastly, save your documentation and diagram into your repository. Submit your repository link to the LMS
 
-## Deployment instructions Link:
--  Link to instructions: https://github.com/kura-labs-org/c4_deployment-3/blob/main/Deployment-instructions.md
+___
+
+# Steps:
+## 1. Clone Source Code & Set Up a New GitHub Repository
+> ````
+> git --version
+> git clone https://github.com/kura-labs-org/c4_deployment-3.git
+> sudo apt install gh
+> gh auth login
+> gh repo create Deployment_3 --public
+> mkdir Deployment_3
+> cp -r c4_deployment-3/* Deployment_3/
+> cd Deployment_3/
+> git init
+> git add .
+> git commit -m "Initial commit"
+> git branch -M main
+> git remote add origin https://github.com/atlas-lion91/Deployment_3
+> git push -u origin main
+> cd ~
+> ````
+
+## 2. Install Jenkins
+> ````
+> sudo apt install openjdk-11-jdk
+> apt-get update
+> sudo apt-get update
+> curl -fsSL https://pkg.jenkins.io/debian/jenkins.io-2023.key | sudo tee     /usr/share/keyrings/jenkins-keyring.asc > /dev/null
+> echo deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc]     https://pkg.jenkins.io/debian binary/ | sudo tee     /etc/apt/sources.list.d/jenkins.list > /dev/null
+> sudo apt-get update
+> sudo apt-get install fontconfig openjdk-17-jre
+> sudo apt-get install jenkins
+> sudo systemctl start jenkins
+> sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+> ````
+
+## 3. Install Python, Pip, and Unzip
+> ````
+> sudo apt update
+> sudo apt install python-pip
+> sudo apt install python3.10-venv
+> sudo apt install unzip
+> pip3 --version
+> python3.10 -m venv --version
+> ````
+
+## 4. Configure Multi-Branch Jenkins Pipeline
+> ````
+> # Log into the Jenkins server
+> # Access the dashboard
+> # Click "New Item"
+> # Provide a project name
+> # Select "Multibranch Pipeline," then click "Ok"
+> # Click "Add Source" and choose "GitHub"
+> # Click "Add" next to 'Credentials'
+> # Enter your GitHub repository details, username, and use a GitHub token as the password
+> ````
+
+## 5. Install AWS CLI
+> ````
+> curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+> unzip awscliv2.zip
+> sudo ./aws/install
+> aws --version
+> aws configure
+> ````Purpose:
+
+
+## 6. Configure Jenkins User
+> ````
+> sudo passwd jenkins
+> sudo su - jenkins -s /bin/bash
+> ````
+
+## 7. Install AWS Beanstalk CLI
+> ```
+> pip install awsebcli --upgrade --user
+> export PATH=$PATH:$HOME/.local/bin
+> eb --version
+> aws configure
+> ```
+
+## 8. Initialize and Create AWS Beanstalk Environment
+> ```
+> cd workspace/
+> ls
+> cd Deployment_3
+
+_main
+> ls
+> eb init
+> eb create
+> ```
+
+## 9. Add Deployment Stage to Jenkins File
+> ````
+> sudo apt update
+> sudo apt install python-pip
+> sudo apt install python3.10-venv
+> sudo apt install unzip
+> pip3 --version
+> python3.10 -m venv --version
+> ````
+
+## 10. Configure Webhook
+> ````
+> # Log into GitHub
+> # Open the project repository
+> # Navigate to Settings > Webhooks > Add Webhook
+> # Enter the payload URL
+> # Select "application/json"
+> # Choose "just the push event"
+> # Click "Add Webhook"
+> # Verify the 200 response from the Webhook ping
+> ````
+
+## 11. Push New Code to Trigger an Automatic Jenkins Build
+> ````
+> # Change directories into the templates folder
+> cd Deployment_3/templates/       
+> # Open the base HTML file to make an edit to the body of the home page of our app
+> nano base.html          
+> # I changed the background color of the home page to red, then pushed to GitHub
+> 
+> git add .
+> git commit -m 'Commit a change'
+> git push
+> ````
+
+
+|![URL Shortener Web App confirmation](https://github.com/atlas-lion91/Deployment_3/assets/140761974/0e2e2dfb-eb43-4fa7-9778-22f7564a9bf3) |
+ | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/redbg.PNG) |
+
+## On our Jenkins server, we can see that a build, test, and deployment were automatically triggered.
+
+> <p align="center">
+![Screenshot 2023-09-16 002247](https://github.com/atlas-lion91/Deployment_3/assets/140761974/5904e395-9dcd-4801-9aa6-02e78a5ac8f0)
+> </p>
+
+---
+
+# Issues:
+### _1) Build Failure..._
+
+> ##### During our initial attempt, the first build process failed, and the console output revealed the error displayed below. We identified that the root cause of this failure was the absence of Python and the incorrect version on our Jenkins server. Without the correct Python binaries, Jenkins couldn't execute the Python code within our application, resulting in a pipeline failure.
+
+> <p align="center">
+> <img src="https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/builderror1.png">
+> </p>
+
+> ##### Jenkins relies on the presence of essential Python components to carry out its tasks, much like attempting to bake a cake without the necessary ingredients or tools. To resolve this issue, we executed the following command to provide Jenkins with the required Python components:
+
+> ````
+> sudo apt install python3.10-venv
+> ````
+
+### _2) Webhook Payload URL Response..._
+> ##### We configured a webhook in GitHub to notify Jenkins, triggering the build, test, and deployment process whenever code changes were pushed to GitHub. In the image below, you can see that we needed to specify a URL:
+
+> <p align="center">
+> <img src="https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookreqres.png">
+> </p>
+
+### Initially, we entered the URL of our application as the payload URL, which resulted in a 403 error response.
+
+| Incorrect Payload URL                   | 403 Error Code                      |
+| ----------------------------------- | ----------------------------------- |
+| ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookpayloadwrong.png) | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/dp3_webhookfail.PNG) | 
+
+### After conducting some research, we came across two valuable resources that helped us understand how to structure the payload URL correctly:
+
+
+### We learned that the payload URL should be the URL of our Jenkins server, formatted as follows:
+
+> #### Format: " http:// + address + : + port + /github-webhook/"  
+> #### Example: " ht<span>tp://</span>35.153.130.215:8080/github-webhook/ "
+
+| Correct Payload URL                   | 200 Status Code                      |
+| ----------------------------------- | ----------------------------------- |
+| ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/webhookpayloadcorrect.png) | ![aaaaaa.png](https://github.com/djtoler/Deployment3____AWSBeanstalk_Jenkins/blob/main/assets/dp3_webhooksuccessres.PNG) |
+
+---
+
+# Optimization:
+
+<aside>
+✅ To optimize this deployment process further, we recommend incorporating shell scripts to streamline the setup of Jenkins, AWS Beanstalk, and necessary installations, thereby enhancing the overall efficiency of the workflow.
+</aside>
