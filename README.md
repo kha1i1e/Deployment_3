@@ -11,6 +11,9 @@
 ### Jenkins:
 > Manual processes for building, testing, and deploying applications are susceptible to human error and often consume significant amounts of time. Jenkins, my automation tool of choice, automates these critical phases, mitigating the risk of human error and expediting our continuous integration and deployment capabilities. While there may be a learning curve associated with Jenkins, the investment in learning this tool ultimately reduces the overall cost and time required to build and deploy the application.
 
+### Webhook: 
+> Webhooks are a crucial component in the context of continuous integration and continuous deployment (CI/CD). Webhooks automate the triggering of actions in response to events. In your case, you want Jenkins to automatically start the deployment process whenever there's a new commit or code change in your GitHub repository. Without a webhook, you'd have to manually initiate the Jenkins build each time, which is not efficient, especially in a CI/CD workflow. Webhooks provide real-time updates. As soon as a relevant event occurs (e.g., a new commit is pushed to the repository), the webhook sends a payload to the configured URL (in this case, my Jenkins server), allowing for immediate action. This ensures that your deployments are as up-to-date as possible. 
+
 ### AWS Beanstalk:
 > The management of infrastructure for continuous application deployment can be both time-consuming and intricate, with escalating costs as complexity increases. AWS Beanstalk takes on the responsibility of overseeing our application's infrastructure, allowing your team concentrate on coding and implementing new features. This seamless infrastructure management ensures that the application can scale efficiently and remain consistently available to the users.
 
