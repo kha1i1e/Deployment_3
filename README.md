@@ -169,7 +169,7 @@ _main
 ### _1) Webhook Payload URL Response:_
 > ##### I configured a webhook in GitHub to notify Jenkins, triggering the build, test, and deployment process whenever code changes were pushed to GitHub. In the image below, you can see that we needed to specify a URL:
 
-### Initially, I entered the URL of our application as the payload URL, which resulted in a 403 error response.
+### Initially, I entered the URL of the application as the payload URL, which resulted in a 403 error response.
 
 ### I learned that the payload URL should be the URL of our Jenkins server, formatted as follows:
 
