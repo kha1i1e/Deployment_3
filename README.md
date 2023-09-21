@@ -86,7 +86,7 @@ ___
 > sudo ./aws/install
 > aws --version
 > aws configure
-> ````Purpose:
+
 
 
 ## 6. Configure Jenkins User
