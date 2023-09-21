@@ -108,8 +108,7 @@ ___
 > cd workspace/
 > ls
 > cd Deployment_3
-
-_main
+> _main
 > ls
 > eb init
 > eb create
